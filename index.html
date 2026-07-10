@@ -735,11 +735,7 @@
   <div class="stripe-band" aria-hidden="true"></div>
 
   <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span class="marquee-item">Creators</span>
-      <span class="marquee-item">Talent</span>
-      <span class="marquee-item">Brands</span>
-      <span class="marquee-item">Agencies</span>
+    <div class="marquee-track" id="marqueeTrack">
       <span class="marquee-item">Creators</span>
       <span class="marquee-item">Talent</span>
       <span class="marquee-item">Brands</span>
@@ -916,6 +912,27 @@
     navLinks.classList.remove('open');
     burger.setAttribute('aria-expanded', 'false');
   }));
+
+  // marquee: repeat words enough times to fill the screen so the loop has no gap
+  (function () {
+    const track = document.getElementById('marqueeTrack');
+    if (!track) return;
+    const marquee = track.parentElement;
+    const baseHTML = track.innerHTML;
+    function rebuild() {
+      track.innerHTML = baseHTML;
+      while (track.scrollWidth < marquee.offsetWidth) {
+        track.insertAdjacentHTML('beforeend', baseHTML);
+      }
+      track.insertAdjacentHTML('beforeend', track.innerHTML);
+    }
+    rebuild();
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(rebuild, 200);
+    });
+  })();
 
   // scroll reveal
   const revealEls = document.querySelectorAll('.reveal');
