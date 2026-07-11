@@ -531,6 +531,8 @@ section{padding:120px 0;}
 .form-status{
   display:none;
   margin-top:14px;
+  padding:12px 16px;
+  border:1.5px solid transparent;
   font-family:var(--font-mono);
   font-size:.78rem;
   letter-spacing:.02em;
@@ -538,7 +540,17 @@ section{padding:120px 0;}
   color:var(--gray);
 }
 .form-status.show{display:block;}
-.form-status.is-error{color:var(--white);}
+.form-status.is-duplicate{
+  border-color:var(--line);
+  color:var(--white);
+}
+.form-status.is-error{
+  border-color:var(--white);
+  background:var(--white);
+  color:var(--black);
+  font-weight:700;
+  letter-spacing:.04em;
+}
 
 .form-legal{
   margin-top:18px;
