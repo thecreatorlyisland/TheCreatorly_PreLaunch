@@ -511,6 +511,20 @@ section{padding:120px 0;}
   font-size:.85rem;
 }
 
+.hp-field{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+
+.form-status{
+  display:none;
+  margin-top:14px;
+  font-family:var(--font-mono);
+  font-size:.78rem;
+  letter-spacing:.02em;
+  text-align:center;
+  color:var(--gray);
+}
+.form-status.show{display:block;}
+.form-status.is-error{color:var(--white);}
+
 .form-legal{
   margin-top:18px;
   font-family:var(--font-mono);

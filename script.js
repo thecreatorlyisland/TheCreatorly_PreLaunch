@@ -59,13 +59,56 @@ roleSelect.querySelectorAll('.role-pill').forEach(pill => {
 });
 
 // main waitlist form
+const WAITLIST_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzblwbpsVvKzPUu72_nucXYit-Rpb-69MKBGSzDPL7AvznlVC3xrMcEZqO_AyFtlIE/exec'; // TODO: paste your deployed Apps Script /exec URL here
+
 const mainForm = document.getElementById('mainForm');
 const formSuccess = document.getElementById('formSuccess');
+const formStatus = document.getElementById('formStatus');
+const submitBtn = mainForm.querySelector('button[type="submit"]');
+
+function setFormStatus(message, type) {
+  formStatus.textContent = message;
+  formStatus.classList.remove('is-error', 'is-duplicate');
+  if (type) formStatus.classList.add('is-' + type);
+  formStatus.classList.toggle('show', Boolean(message));
+}
+
 mainForm.addEventListener('submit', (e) => {
   e.preventDefault();
   if (!mainForm.checkValidity()) { mainForm.reportValidity(); return; }
-  // NOTE: this is a static prototype — wire this up to your real backend
-  // (Django endpoint, Google Sheet, Mailchimp, etc.) before launch.
-  mainForm.classList.add('hide');
-  formSuccess.classList.add('show');
+
+  setFormStatus('', null);
+  submitBtn.disabled = true;
+
+  const payload = {
+    name: document.getElementById('fullName').value.trim(),
+    email: document.getElementById('mainEmail').value.trim(),
+    role: roleValue.value,
+    instagram: document.getElementById('handle').value.trim(),
+    honeypot: document.getElementById('hpWebsite').value
+  };
+
+  fetch(WAITLIST_ENDPOINT, {
+    method: 'POST',
+    // text/plain avoids a CORS preflight against the Apps Script Web App
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.result === 'success') {
+        mainForm.classList.add('hide');
+        formSuccess.classList.add('show');
+      } else if (data.result === 'duplicate') {
+        setFormStatus("Looks like you're already on the list — we'll be in touch.", 'duplicate');
+        submitBtn.disabled = false;
+      } else {
+        setFormStatus('Something went wrong on our end. Please try again in a moment.', 'error');
+        submitBtn.disabled = false;
+      }
+    })
+    .catch(() => {
+      setFormStatus("Couldn't reach the server — check your connection and try again.", 'error');
+      submitBtn.disabled = false;
+    });
 });

@@ -201,7 +201,12 @@
             <input type="text" id="handle" placeholder="@yourname">
           </div>
           <input type="hidden" id="roleValue" name="role">
+          <div class="hp-field" aria-hidden="true">
+            <label for="hpWebsite">Leave this field blank</label>
+            <input type="text" id="hpWebsite" name="hpWebsite" tabindex="-1" autocomplete="off">
+          </div>
           <button type="submit" class="btn btn--light">Join the waitlist</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
         </form>
 
         <div class="form-success" id="formSuccess">
