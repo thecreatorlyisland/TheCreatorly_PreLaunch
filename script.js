@@ -55,11 +55,12 @@ roleSelect.querySelectorAll('.role-pill').forEach(pill => {
     roleSelect.querySelectorAll('.role-pill').forEach(p => p.setAttribute('aria-pressed', 'false'));
     pill.setAttribute('aria-pressed', 'true');
     roleValue.value = pill.dataset.role;
+    setFormStatus('', null);
   });
 });
 
 // main waitlist form
-const WAITLIST_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxwi8wDXbCw9SeZ6fj7P6o9bOfq9ZW27XRUmdqaV2n2LZVnLISvhoJ1Ula2sIH9FsAT/exec'; 
+const WAITLIST_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxwi8wDXbCw9SeZ6fj7P6o9bOfq9ZW27XRUmdqaV2n2LZVnLISvhoJ1Ula2sIH9FsAT/exec';
 
 const mainForm = document.getElementById('mainForm');
 const formSuccess = document.getElementById('formSuccess');
@@ -75,6 +76,11 @@ function setFormStatus(message, type) {
 
 mainForm.addEventListener('submit', (e) => {
   e.preventDefault();
+
+  if (!roleValue.value) {
+    setFormStatus('Please select a role to continue.', 'error');
+    return;
+  }
   if (!mainForm.checkValidity()) { mainForm.reportValidity(); return; }
 
   setFormStatus('', null);
@@ -85,6 +91,7 @@ mainForm.addEventListener('submit', (e) => {
     email: document.getElementById('mainEmail').value.trim(),
     role: roleValue.value,
     instagram: document.getElementById('handle').value.trim(),
+    youtube: document.getElementById('youtube').value.trim(),
     honeypot: document.getElementById('hpWebsite').value
   };
 
