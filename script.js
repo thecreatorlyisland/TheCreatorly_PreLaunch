@@ -58,18 +58,6 @@ roleSelect.querySelectorAll('.role-pill').forEach(pill => {
   });
 });
 
-// hero mini form -> scrolls to and prefills main form
-const heroForm = document.getElementById('heroForm');
-const heroEmail = document.getElementById('heroEmail');
-const mainEmail = document.getElementById('mainEmail');
-heroForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  if (!heroForm.checkValidity()) { heroForm.reportValidity(); return; }
-  mainEmail.value = heroEmail.value;
-  document.getElementById('join').scrollIntoView({ behavior: 'smooth' });
-  setTimeout(() => document.getElementById('fullName').focus(), 500);
-});
-
 // main waitlist form
 const mainForm = document.getElementById('mainForm');
 const formSuccess = document.getElementById('formSuccess');
