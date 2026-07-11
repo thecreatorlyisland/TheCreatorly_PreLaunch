@@ -158,6 +158,21 @@ input,select{font-family:inherit;}
   border-color:var(--white);
 }
 
+.btn-spinner{
+  display:none;
+  width:14px;height:14px;
+  border:1.5px solid currentColor;
+  background:repeating-linear-gradient(45deg, currentColor 0 3px, transparent 3px 6px);
+  flex-shrink:0;
+  animation:btn-spin .8s linear infinite;
+}
+.btn.is-loading .btn-spinner{display:inline-block;}
+.btn.is-loading{cursor:default;}
+@keyframes btn-spin{to{transform:rotate(360deg);}}
+@media (prefers-reduced-motion: reduce){
+  .btn-spinner{animation:none;}
+}
+
 .nav-cta{display:flex;align-items:center;gap:28px;}
 
 .burger{

@@ -66,12 +66,20 @@ const mainForm = document.getElementById('mainForm');
 const formSuccess = document.getElementById('formSuccess');
 const formStatus = document.getElementById('formStatus');
 const submitBtn = mainForm.querySelector('button[type="submit"]');
+const submitBtnLabel = submitBtn.querySelector('.btn-label');
+const submitBtnDefaultText = submitBtnLabel.textContent;
 
 function setFormStatus(message, type) {
   formStatus.textContent = message;
   formStatus.classList.remove('is-error', 'is-duplicate');
   if (type) formStatus.classList.add('is-' + type);
   formStatus.classList.toggle('show', Boolean(message));
+}
+
+function setSubmitLoading(isLoading) {
+  submitBtn.disabled = isLoading;
+  submitBtn.classList.toggle('is-loading', isLoading);
+  submitBtnLabel.textContent = isLoading ? 'Joining…' : submitBtnDefaultText;
 }
 
 mainForm.addEventListener('submit', (e) => {
@@ -84,7 +92,7 @@ mainForm.addEventListener('submit', (e) => {
   if (!mainForm.checkValidity()) { mainForm.reportValidity(); return; }
 
   setFormStatus('', null);
-  submitBtn.disabled = true;
+  setSubmitLoading(true);
 
   const payload = {
     name: document.getElementById('fullName').value.trim(),
@@ -108,14 +116,14 @@ mainForm.addEventListener('submit', (e) => {
         formSuccess.classList.add('show');
       } else if (data.result === 'duplicate') {
         setFormStatus("Looks like you're already on the list — we'll be in touch.", 'duplicate');
-        submitBtn.disabled = false;
+        setSubmitLoading(false);
       } else {
         setFormStatus('Something went wrong on our end. Please try again in a moment.', 'error');
-        submitBtn.disabled = false;
+        setSubmitLoading(false);
       }
     })
     .catch(() => {
       setFormStatus("Couldn't reach the server — check your connection and try again.", 'error');
-      submitBtn.disabled = false;
+      setSubmitLoading(false);
     });
 });

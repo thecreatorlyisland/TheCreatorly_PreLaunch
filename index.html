@@ -209,7 +209,10 @@
             <label for="hpWebsite">Leave this field blank</label>
             <input type="text" id="hpWebsite" name="hpWebsite" tabindex="-1" autocomplete="off">
           </div>
-          <button type="submit" class="btn btn--light">Join the waitlist</button>
+          <button type="submit" class="btn btn--light">
+            <span class="btn-spinner" aria-hidden="true"></span>
+            <span class="btn-label">Join the waitlist</span>
+          </button>
           <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
         </form>
 
