@@ -60,7 +60,7 @@ roleSelect.querySelectorAll('.role-pill').forEach(pill => {
 });
 
 // main waitlist form
-const WAITLIST_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxwi8wDXbCw9SeZ6fj7P6o9bOfq9ZW27XRUmdqaV2n2LZVnLISvhoJ1Ula2sIH9FsAT/exec';
+const WAITLIST_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzl663B-AYwX3WnfflW5pvLOWwLoRYIjLcPPZIKhzRJFsUqRXgVtGfJLGFzhKNvVYyG/exec';
 
 const mainForm = document.getElementById('mainForm');
 const formSuccess = document.getElementById('formSuccess');
